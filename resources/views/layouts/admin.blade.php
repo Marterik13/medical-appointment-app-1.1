@@ -19,6 +19,7 @@
         <script src="https://kit.fontawesome.com/b2bb8bbf2e.js" crossorigin="anonymous"></script>
         <wireui:scripts />
 
+        <wireui:scripts />
         @livewireStyles
     </head>
     <body class="font-sans antialiased bg-gray-100">
