@@ -1,3 +1,7 @@
+@props([
+    'title' => config('app.name', 'Laravel'),
+    'breadcrumbs' => [], 
+]) 
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
@@ -5,41 +9,38 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
-        <title>{{ config('app.name', 'Laravel') }}</title>
+        <title>{{ $title }}</title>
 
-        <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
 
-        <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
-        <script src="https://kit.fontawesome.com/45fd734d5a.js" crossorigin="anonymous"></script>
 
-        <!-- Styles -->
+        <script src="https://kit.fontawesome.com/b2bb8bbf2e.js" crossorigin="anonymous"></script>
+        <wireui:scripts />
+
         @livewireStyles
     </head>
-    <body class="font-sans antialiased bg-gray-50">
-        <x-banner />
+    <body class="font-sans antialiased bg-gray-100">
 
-        <div class="min-h-screen bg-gray-100 dark:bg-gray-900">
+    @include('layouts.includes.admin.navigation')
+    @include('layouts.includes.admin.sidebar')
 
-@include('layouts.includes.admin.navigation')
-@include('layouts.includes.admin.sidebar')
+    <div class="p-4 sm:ml-64 mt-14">
+       <div class="mt-10">
+        
+@include('components.breadcrumb', ['breadcrumbs' => $breadcrumbs])
+       </div>
+       
+       <main>
+           {{ $slot }}
+       </main>
+    </div>
 
-
-<div class="p-4 sm:ml-64 mt-14">
-
-<div class="mt-14">
-
-{{$slot}}
-    hello word
-
-
-</div>
         @stack('modals')
-
         @livewireScripts
-       <script src="https://cdn.jsdelivr.net/npm/flowbite@4.0.1/dist/flowbite.min.js"></script>
-</div>
+
+        {{-- Usando versión estable de Flowbite --}}
+        <script src="https://cdn.jsdelivr.net/npm/flowbite@2.2.1/dist/flowbite.min.js"></script>
     </body>
 </html>

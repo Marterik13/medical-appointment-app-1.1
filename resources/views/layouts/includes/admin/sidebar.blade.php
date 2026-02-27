@@ -1,9 +1,8 @@
 @php
-   // Arreglo de iconos adaptado
    $links = [
       [
          'name' => 'Dashboard',
-         'icon' => 'fa-solid fa-house',
+         'icon' => 'fa-solid fa-gauge',
          'href' => route('admin.dashboard'),
          'active' => request()->routeIs('admin.dashboard')
       ],
@@ -11,40 +10,59 @@
          'header' => 'Administración',
       ],
       [
-         'name' => 'Pacientes',
+         'name' => 'Personas',
          'icon' => 'fa-solid fa-user-group',
-         'href' => route('admin.dashboard'),
-         'active' => request()->routeIs('admin.dashboard')
-      ],
-      [
-         'name' => 'Citas',
-         'icon' => 'fa-solid fa-calendar-days',
-         'href' => route('admin.dashboard'),
-         'active' => request()->routeIs('admin.dashboard')
+         'href' => '#',
+         'active' => false,
+         'submenu' => [
+            ['name' => 'Productos', 'href' => '#'],
+            ['name' => 'Categorías', 'href' => '#'],
+            ['name' => 'Pedidos', 'href' => '#']
+         ]
       ]
    ];
 @endphp
 
 <aside id="top-bar-sidebar" class="fixed top-0 left-0 z-40 w-64 h-full transition-transform -translate-x-full sm:translate-x-0" aria-label="Sidebar">
-   <div class="h-full px-3 py-4 overflow-y-auto bg-neutral-primary-soft border-e border-default">
+   <div class="h-full px-3 py-4 overflow-y-auto bg-white border-e border-gray-200">
       <a href="/" class="flex items-center ps-2.5 mb-5">
-         <img src="{{ asset('imagenes/ejemplo.jpg') }}" class="h-6 me-3" alt="Healtify Logo" />
-         <span class="self-center text-lg text-heading font-semibold whitespace-nowrap">Healtify</span>
+         <img src="{{ asset('imagenes/ejemplo.jpg') }}" class="h-6 me-3" alt="Logo" />
+         <span class="self-center text-lg font-semibold whitespace-nowrap text-gray-800">Healtify</span>
       </a>
       <ul class="space-y-2 font-medium">
          @foreach ($links as $link)
          <li>
-            {{-- Revisa si existe la llave header --}}
             @isset($link['header'])
-               <div class="px-2 py-2 text-xs font-semibold text-gray-300 uppercase">
+               <div class="px-2 py-2 text-xs font-semibold text-gray-400 uppercase">
                   {{ $link['header'] }}
                </div>
             @else
-               {{-- Estructura de enlace igual a la de tu compañero --}}
-               <a href="{{ $link['href'] }}" class="flex items-center px-2 py-1.5 text-body rounded-base hover:bg-neutral-tertiary hover:text-fg-brand group {{ $link['active'] ? 'bg-gray-200' : '' }}">
-                  <i class="{{ $link['icon'] }}"></i>
-                  <span class="ms-3">{{ $link['name'] }}</span>
-               </a>
+               @isset($link['submenu'])
+                  @php $id = Str::slug($link['name']); @endphp
+                  <button type="button" class="flex items-center w-full justify-between px-2 py-1.5 text-gray-700 rounded-lg hover:bg-gray-100 group" data-collapse-toggle="dropdown-{{ $id }}">
+                     <span class="w-6 h-6 inline-flex items-center justify-center text-gray-500">
+                        <i class="{{ $link['icon'] }}"></i>
+                     </span>
+                     <span class="flex-1 ms-3 text-left whitespace-nowrap">{{ $link['name'] }}</span>
+                     <i class="fa-solid fa-chevron-down text-xs"></i>
+                  </button>
+                  <ul id="dropdown-{{ $id }}" class="hidden py-2 space-y-2">
+                     @foreach ($link['submenu'] as $item)
+                        <li>
+                           <a href="{{ $item['href'] }}" class="pl-11 flex items-center p-2 text-gray-600 rounded-lg hover:bg-gray-100">
+                              {{ $item['name'] }}
+                           </a>
+                        </li>
+                     @endforeach
+                  </ul>
+               @else
+                  <a href="{{ $link['href'] }}" class="flex items-center px-2 py-1.5 text-gray-700 rounded-lg hover:bg-gray-100 {{ $link['active'] ? 'bg-gray-100 font-bold' : '' }}">
+                     <span class="w-6 h-6 inline-flex items-center justify-center text-gray-500">
+                        <i class="{{ $link['icon'] }}"></i>
+                     </span>
+                     <span class="flex-1 ms-3 whitespace-nowrap">{{ $link['name'] }}</span>
+                  </a>
+               @endisset
             @endisset
          </li>
          @endforeach
