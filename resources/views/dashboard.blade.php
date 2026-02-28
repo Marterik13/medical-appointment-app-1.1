@@ -1,12 +1,13 @@
-<x-admin-layout
-    title="Dashboard"
-    :breadcrumbs="[
-        ['name' => 'Dashboard', 'href' => route('admin.dashboard')],
-        ['name' => 'Ejemplo']
-    ]">
+<x-admin-layout title="Dashboard" :breadcrumbs="[
+    [
+        'name' => 'Dashboard',
+        'href' => route('admin.dashboard')
+    ]
+]">
 
     <div class="p-6 bg-white rounded-lg shadow">
-        Hola desde el panel de control administrativo.
+        <h1 class="text-2xl font-semibold text-gray-800">Bienvenido al Panel de Control</h1>
+        <p class="mt-2 text-gray-600">Aquí podrás ver un resumen general de tu sistema.</p>
     </div>
 
 </x-admin-layout>

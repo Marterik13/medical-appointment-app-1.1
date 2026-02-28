@@ -7,19 +7,14 @@
          'active' => request()->routeIs('admin.dashboard')
       ],
       [
-         'header' => 'Administración',
+         'header' => 'Gestión',
       ],
       [
-         'name' => 'Personas',
-         'icon' => 'fa-solid fa-user-group',
-         'href' => '#',
-         'active' => false,
-         'submenu' => [
-            ['name' => 'Productos', 'href' => '#'],
-            ['name' => 'Categorías', 'href' => '#'],
-            ['name' => 'Pedidos', 'href' => '#']
-         ]
-      ]
+         'name' => 'Roles y Permisos',
+         'icon' => 'fa-solid fa-shield-halved',
+         'href' => route('admin.roles.index'),
+         'active' => request()->routeIs('admin.roles.*'),
+      ],
    ];
 @endphp
 

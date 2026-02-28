@@ -4,7 +4,7 @@ use WireUi\Components;
 use WireUi\Enum\Packs;
 use WireUi\WireUiConfig as Config;
 
-return [
+
 
     /*
     |--------------------------------------------------------------------------
@@ -18,8 +18,13 @@ return [
     |
      */
 
-    'prefix' => wire-,
-
+    return [
+        'prefix' => 'wire-', // ESTE ES EL SECRETO
+        'style' => [
+            'shadow' => Packs\Shadow::BASE,
+            'rounded' => Packs\Rounded::MD,
+        'color' => Packs\Color::PRIMARY,
+    ],
     /*
     |--------------------------------------------------------------------------
     | Global Styles

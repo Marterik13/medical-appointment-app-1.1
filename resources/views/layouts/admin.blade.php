@@ -15,12 +15,12 @@
         <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
 
         @vite(['resources/css/app.css', 'resources/js/app.js'])
+        @livewireStyles
 
         <script src="https://kit.fontawesome.com/b2bb8bbf2e.js" crossorigin="anonymous"></script>
-        <wireui:scripts />
 
         <wireui:scripts />
-        @livewireStyles
+        @wireUiScripts
     </head>
     <body class="font-sans antialiased bg-gray-100">
 
@@ -28,20 +28,33 @@
     @include('layouts.includes.admin.sidebar')
 
     <div class="p-4 sm:ml-64 mt-14">
-       <div class="mt-10">
-        
-@include('components.breadcrumb', ['breadcrumbs' => $breadcrumbs])
+       <div class="mt-14 flex justify-between items-center w-full">
+            @include('components.breadcrumb', ['breadcrumbs' => $breadcrumbs])
+            
+            @isset($action)
+                <div>
+                    {{ $action }}
+                </div>
+            @endisset
        </div>
        
-       <main>
+       <main class="mt-4">
            {{ $slot }}
        </main>
     </div>
 
-        @stack('modals')
-        @livewireScripts
+    @stack('modals')
 
-        {{-- Usando versión estable de Flowbite --}}
-        <script src="https://cdn.jsdelivr.net/npm/flowbite@2.2.1/dist/flowbite.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    
+    {{-- Alerta simplificada para evitar errores de compilación --}}
+    @if(session('swal'))
+        <script>
+            Swal.fire(@json(session('swal')));
+        </script>
+    @endif
+
+    @livewireScripts
+    <script src="https://cdn.jsdelivr.net/npm/flowbite@2.2.1/dist/flowbite.min.js"></script>
     </body>
 </html>
